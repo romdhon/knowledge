@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}    
+
+{% block title%}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <div class="container top-space">
+
+        {% for post in posts.category_series.all %}
+        <div class="row">
+            <div class="col m10">
+                <h1><a href="">{{ post.title|title }}</a></h1>
+                <p>@{{post.author}} | {{ post.create_date }}</p>
+                {{ post.content | safe }}
+
+                {% block comments %}{% include 'comment/post_comment.html' %}{% endblock %}
+
+                {% for comment in post.comments.all %}
+                    <p><em>{{ user.username }}</em></p>
+                    <p>{{ comment.text }}</p>
+                    <hr>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        </div>
+        
+
+    </div>
+    
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+{% block title %}
+    {% if update %}
+        {{post.title}}
+    {% else %}
+        New Post
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container top-space">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p}}
+        
+            <input type="submit" value="Submit" class="waves-effect waves-light btn">
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    {% load static %}
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="{% static 'post/css/materialize.min.css' %}">
+
+    <!-- Hightlight -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- materials icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="{% static 'post/css/style.css' %}">
+
+    
+<body>
+    <nav>
+        <div class="my-container">
+        <div class="nav-wrapper">
+            <a href="{% url 'post:categories' %}" class="brand-logo"><strong>Turtlebot3</strong></a>
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="large material-icons">menu</i></a>
+
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    {% if user.is_authenticated %}
+                        <li class=""><a class="" href="{% url 'post:create' %}">Create Post</a></li>
+                        <li class=""><a class="" href="">{{user.username}}</a></li>
+
+                        <ul id="dropdown2" class="dropdown-content">
+                            <li class=""><a class="" href="{% url 'admin:index' %}">Admin</a></li>
+                            <li class=""><a class="" href="{% url 'logout' %}"><i class="large material-icons">exit_to_app</i></a></li>
+                        </ul>
+                        <li><a class="dropdown-trigger" href="#!" data-target="dropdown2"><i
+                                class="material-icons">person</i></a></li>
+                    {% else %}
+                        <li class=""><a class="waves-effect waves-light btn" href="{% url 'registration' %}">Register</a></li>
+                        <li class=""><a class="" href="{% url 'login' %}">Login<i class="material-icons left">person</i></a></li>
+                    {% endif %}
+                </ul>
+        </div>
+        </div>
+    </nav>
+
+    
+    <ul id="slide-out" class="sidenav">
+        {% if user.is_authenticated %}
+            <li class=""><a class="" href="{% url 'admin:index' %}">Admin</a></li>
+            <li class=""><a class="" href="{% url 'post:create' %}">Create Post</a></li>
+            <li class=""><a class="" href="">{{user.username}}</a></li>
+            <li class=""><a class="" href="{% url 'logout' %}"><i class="material-icons">exit_to_app</i></a></li>
+
+        {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+    </ul>
+    
+
+
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+
+    <!-- materialized -->
+    <!-- Compiled and minified JavaScript -->
+    <script src="{% static 'post/js/materialize.min.js' %}"></script>
+
+
+
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                alert('{{ message }}')
+            </script>
+        {% endfor %}
+    {% endif %}
+
+    <script>
+            $(document).ready(function () {
+                $('.sidenav').sidenav();
+            });
+        
+
+            $(document).ready(function () {
+                $('select').formSelect();
+            });
+
+            M.AutoInit();
+
+            $(document).ready(function () {
+                $('.collapsible').collapsible();
+            });
+        
+    </script>
+
+</body>
+</html>
